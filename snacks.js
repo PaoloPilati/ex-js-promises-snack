@@ -8,15 +8,16 @@
 function getPostTitle(id) {
     return fetch(`https://dummyjson.com/posts/${id}`)
         .then((response) => response.json())
-        .then((data) => {
-            console.log(data.title);
-        })
+        .then((data) => data.title)
         .catch((error) => {
             console.error(error);
     });
 }
 
 getPostTitle(1)
+    .then((title) => {
+        console.log(title);
+    });
 
 
 
