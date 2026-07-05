@@ -23,7 +23,13 @@ getPostTitle(1)
 function getPost(id) {
     return fetch(`https://dummyjson.com/posts/${id}`)
         .then((response) => response.json())
-        .then((data) => data)
+        .then((post) => {
+            return fetch(`https://dummyjson.com/users/${post.userId}`)
+            .then((response) => response.json())
+            .then((user) => {
+            return {...post, user: user};
+            })
+        })
         .catch((error) => {
             console.error(error);
     });
@@ -31,9 +37,10 @@ function getPost(id) {
 
 getPost(1)
     .then((data) => {
-        console.log(data);
+        console.log(`Title: ${data.title}`);
+        console.log(`Body: ${data.body}`);
+        console.log(`Author: ${data.user.firstName} ${data.user.lastName}`);
     });
-
 
 
 
