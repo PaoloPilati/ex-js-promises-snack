@@ -50,15 +50,48 @@ getPost(1)
 // 🎯 Bonus: HOF con closure per memorizzare l'ultimo lancio
 // Modifica la funzione in creaLanciaDado(), che restituisce una closure che memorizza l'ultimo risultato. Se il numero esce due volte di fila, stampa "Incredibile!".
 
-function throwDie() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const isStuck = Math.random() < 0.2;
-            const result = Math.floor(Math.random() * 6) + 1;
-            if(!isStuck) {resolve(result);}else{reject("The die is stuck!")}
-        }, 2000);
-    })
+// function throwDie() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             const isStuck = Math.random() < 0.2;
+//             const result = Math.floor(Math.random() * 6) + 1;
+//             if(!isStuck) {resolve(result);}else{reject("The die is stuck!")}
+//         }, 2000);
+//     })
+// }
+
+// throwDie()
+//     .then((result) => {
+//         console.log(result);
+//     })
+//     .catch((error) => {
+//         console.error(error);
+//     });
+
+function createThrowDie() {
+    let lastResult = null;
+
+    return function () {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const isStuck = Math.random() < 0.2;
+                const result = Math.floor(Math.random() * 6) + 1;
+                
+                if(!isStuck) {
+                    if(result === lastResult) {
+                        console.log("Incredible!");
+                    }
+                    lastResult = result;
+                    resolve(result);
+                }else{
+                    reject("The die is stuck!");
+                }
+            }, 2000);
+        })
+    }
 }
+
+const throwDie = createThrowDie();
 
 throwDie()
     .then((result) => {
@@ -67,4 +100,36 @@ throwDie()
     .catch((error) => {
         console.error(error);
     });
+
+// throwDie()
+//     .then((result) => {
+//         console.log(result);
+//     })
+//     .catch((error) => {
+//         console.error(error);
+//     });
+
+// throwDie()
+//     .then((result) => {
+//         console.log(result);
+//     })
+//     .catch((error) => {
+//         console.error(error);
+//     });
+// throwDie()
+//     .then((result) => {
+//         console.log(result);
+//     })
+//     .catch((error) => {
+//         console.error(error);
+//     });
+
+// throwDie()
+//     .then((result) => {
+//         console.log(result);
+//     })
+//     .catch((error) => {
+//         console.error(error);
+//     });
+
 
