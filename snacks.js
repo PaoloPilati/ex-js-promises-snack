@@ -29,10 +29,8 @@ function getPostTitle(id) {
     
 
 getPostTitle(1)
-    .then((title) => {
-        console.log(title)
-    .catch(err => console.error(err))
-    });
+    .then(title => console.log(title))
+    .catch(err => console.error(err));
 
 // 🎯 Bonus: Ottieni l'intero post con l'autore
 // Crea una funzione getPost(id) che recupera l'intero post. Concatena una seconda chiamata che aggiunge una proprietà user che contiene i dati dell'autore, recuperati dalla chiamata https://dummyjson.com/users/{post.userId}.
