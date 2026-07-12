@@ -36,26 +36,33 @@ getPostTitle(1)
 // Crea una funzione getPost(id) che recupera l'intero post. Concatena una seconda chiamata che aggiunge una proprietà user che contiene i dati dell'autore, recuperati dalla chiamata https://dummyjson.com/users/{post.userId}.
 
 function getPost(id) {
-    return fetch(`https://dummyjson.com/posts/${id}`)
-        .then((response) => response.json())
-        .then((post) => {
-            return fetch(`https://dummyjson.com/users/${post.userId}`)
-            .then((response) => response.json())
-            .then((user) => {
-            return {...post, user: user};
-            })
-        })
-        .catch((error) => {
-            console.error(error);
+    return new Promise((resolve, reject) => {
+
+        fetch(`https://dummyjson.com/posts/${id}`)
+            .then(res => res.json())
+            .then(post =>
+                fetch(`https://dummyjson.com/users/${post.userId}`)
+                    .then(res => res.json())
+                    .then(user => resolve({...post, user}))
+                    // .then(user => {
+                    //     const result = {...post, user};
+                    //     resolve(result);
+                    // })
+            )
+            .catch(reject);
+
     });
 }
 
+
 getPost(1)
-    .then((data) => {
-        console.log(`Title: ${data.title}`);
-        console.log(`Body: ${data.body}`);
-        console.log(`Author: ${data.user.firstName} ${data.user.lastName}`);
-    });
+    .then((post) => {
+        console.log(`Title: ${post.title}`);
+        console.log(`Body: ${post.body}`);
+        console.log(`Author: ${post.user.firstName} ${post.user.lastName}`);
+    })
+    .catch(err => console.error(err));
+
 
 
 
