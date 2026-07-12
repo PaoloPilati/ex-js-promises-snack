@@ -3,18 +3,35 @@
 
 // Crea una funzione getPostTitle(id) che accetta un id e restituisce una Promise che recupera il titolo di un post dal link https://dummyjson.com/posts/{id}
 
+// function getPostTitle(id) {
+//     return fetch(`https://dummyjson.com/posts/${id}`)
+//         .then((response) => response.json())
+//         .then((data) => data.title)
+//         .catch((error) => {
+//             console.error(error);
+//     });
+// }
+
+// getPostTitle(1)
+//     .then((title) => {
+//         console.log(title)
+//     });
+
 function getPostTitle(id) {
-    return fetch(`https://dummyjson.com/posts/${id}`)
-        .then((response) => response.json())
-        .then((data) => data.title)
-        .catch((error) => {
-            console.error(error);
-    });
+    return new Promise((resolve, reject) =>{
+  
+  fetch(`https://dummyjson.com/posts/${id}`)
+        .then(res => res.json())
+        .then(post => resolve(post.title))
+        .catch(reject);
+      });
 }
+    
 
 getPostTitle(1)
     .then((title) => {
-        console.log(title);
+        console.log(title)
+    .catch(err => console.error(err))
     });
 
 // 🎯 Bonus: Ottieni l'intero post con l'autore
