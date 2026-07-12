@@ -95,13 +95,14 @@ function createThrowDie() {
 
     return function () {
         return new Promise((resolve, reject) => {
+            console.log("Alea  iacta est...");
             setTimeout(() => {
                 const isStuck = Math.random() < 0.2;
                 const result = Math.floor(Math.random() * 6) + 1;
                 
                 if(!isStuck) {
                     if(result === lastResult) {
-                        console.log("Incredible!");
+                        console.log("Amazing!");
                     }
                     lastResult = result;
                     resolve(result);
@@ -117,7 +118,7 @@ const throwDie = createThrowDie();
 
 throwDie()
     .then((result) => {
-        console.log(result);
+        .then(console.log(result);)
     })
     .catch((error) => {
         console.error(error);
